@@ -93,8 +93,8 @@ To permanently remove from history, follow GitHub's documentation or use BFG/git
 - Add a LICENSE file to declare reuse terms.
 
 ## License
-- No license file included. Add a LICENSE (e.g., MIT) if you want to allow reuse.
+- No license file included.
 
 ## Contact
 - Repo owner: jakka-anjali
-- For help trimming data from history or converting this to a private repo safely, I can draft commands and a step-by-step guide.
+

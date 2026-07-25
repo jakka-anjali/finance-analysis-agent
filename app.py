@@ -5,6 +5,7 @@ from datetime import timedelta
 import pandas as pd
 import streamlit as st
 
+from src.agent.query_agent import answer_query
 from src.tools.anomaly_tool import detect_anomalies, detect_structuring
 from src.tools.eda_tool import run_eda
 from src.tools.explainer_tool import explain_risk
@@ -61,9 +62,25 @@ filtered_transactions = filter_transactions(
     min_amount=min_amount or None,
 )
 
-overview_tab, investigation_tab, alerts_tab = st.tabs(
-    ["Overview", "Customer investigation", "Alerts"]
+assistant_tab, overview_tab, investigation_tab, alerts_tab = st.tabs(
+    ["Ask AML Sentinel", "Overview", "Customer investigation", "Alerts"]
 )
+
+with assistant_tab:
+    st.subheader("Ask a transaction-monitoring question")
+    st.caption("This demo agent calls your existing AML tools; it does not require an API key.")
+    query = st.text_input(
+        "Question",
+        placeholder="Find structuring patterns in the last 60 days",
+    )
+    if st.button("Analyse question", type="primary"):
+        response = answer_query(transactions, query)
+        st.markdown(f"### {response['title']}")
+        st.write(response["answer"])
+        if response.get("action"):
+            st.info(f"Recommended action: {response['action']}")
+        if not response["data"].empty:
+            st.dataframe(response["data"].head(100), width="stretch", hide_index=True)
 
 with overview_tab:
     profile = run_eda(filtered_transactions)
@@ -84,7 +101,7 @@ with overview_tab:
     st.subheader("Filtered transactions")
     st.dataframe(
         filtered_transactions.sort_values("timestamp", ascending=False),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 
@@ -99,7 +116,7 @@ with investigation_tab:
         customer_metrics[0].metric("Transactions", len(customer_transactions))
         customer_metrics[1].metric("Total value", format_currency(customer_transactions["amount"].sum()))
         customer_metrics[2].metric("Largest transaction", format_currency(customer_transactions["amount"].max()))
-        st.dataframe(customer_transactions, use_container_width=True, hide_index=True)
+        st.dataframe(customer_transactions, width="stretch", hide_index=True)
 
         if st.button("Run risk assessment", type="primary"):
             structuring_alerts = detect_structuring(customer_transactions)
@@ -120,7 +137,7 @@ with alerts_tab:
         st.warning(f"{len(structuring_alerts)} linked transactions triggered the structuring rule.")
         st.dataframe(
             structuring_alerts[["customer_id", "timestamp", "amount", "country", "txn_count_48h"]],
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
         for alert in explain_risk(structuring_alerts):
@@ -133,6 +150,6 @@ with alerts_tab:
         visible_anomalies[
             ["transaction_id", "customer_id", "timestamp", "amount", "channel", "country", "anomaly_score"]
         ],
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )

@@ -2,15 +2,25 @@
 
 AI-powered suspicious-activity detection agent that dynamically orchestrates EDA, feature engineering, anomaly detection, risk classification, and human-readable explanations for transaction and customer-level AML analysis.
 
+## Problem statement
+Al-Powered Suspicious Activity Detection
+
+Financial institutions globally are mandated by regulatory bodies (FinCEN, FATF, local authorities) to implement robust Anti-Money Laundering (AML) compliance programs. However, traditional rute-based systems generate excessive false positives, overwhelming compliance teams and increasing operational costs. Meanwhile, sophisticated money laundering techniques-including structuring. smurfing, and layering evade conventional detection methods.
+The challenge is to build an intelligent, autonomous agent that can learn from transaction patterns, identify suspicious behaviours, and provide explainable risk assessments with actionable escalation recommendations. Such an agent would reduce false positives, improve detection accuracy, and enable compliance teams to focus on genuine threats rather than manual rule tuning.
+The agent must accept a user instruction or query (e.g., "Analyse this dataset for suspicious activity" or "Flag high-risk customers") and autonomously orchestrate calls to internal components/tools to complete the task.
+
 ## Summary
 This project demonstrates an agentic system that accepts natural-language queries (e.g., "Find structuring in the last 30 days" or "Is customer 4521 suspicious?"), builds a query-aware execution plan, invokes only the necessary analytic tools, and returns ranked suspicious items with risk levels, explanations, and recommended escalation actions (monitor / review / report).
 
-Key capabilities:
+## Key capabilities:
 - Intent and filter extraction from free-text queries (date ranges, customer IDs, transaction types).
+- Agentic orchestration
 - Dynamic planner that invokes only required tools (no fixed sequential pipeline).
-- On-demand EDA, targeted preprocessing, and AML feature engineering (frequency, rolling sums, velocity).
-- Hybrid detection (rules + statistical / ML scoring).
-- Risk classification into low / medium / high and concise human-readable explanations.
+- On-demand and selective EDA, targeted preprocessing, and AML feature engineering (frequency, rolling sums, velocity).
+- Hybrid anomaly detection (rules + statistical / ML scoring).
+- Risk scoring and classification into low / medium / high and concise human-readable explanations.
+- Explainable AI
+- Escalation recommendations
 
 ## Repo layout
 ```

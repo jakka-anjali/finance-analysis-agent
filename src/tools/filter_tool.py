@@ -9,7 +9,7 @@ import pandas as pd
 # outputs/
 # ├── aml_transactions.csv
 # └── src/tools/filter_tool.py
-DEFAULT_DATA_PATH = Path(__file__).resolve().parents[2] / "aml_transactions.csv"
+DEFAULT_DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "aml_transactions.csv"
 
 
 def load_transactions(data_path: str | Path = DEFAULT_DATA_PATH) -> pd.DataFrame:

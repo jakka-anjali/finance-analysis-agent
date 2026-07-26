@@ -441,6 +441,32 @@ streamlit run app.py
 ```
 
 ---
+## Dataset
+
+This project uses a synthetic Anti-Money Laundering (AML) transaction dataset included in:
+
+`data/aml_transactions.csv`
+
+The dataset was synthetically generated for educational and demonstration purposes to simulate realistic banking transactions and common AML scenarios such as:
+- Structuring (multiple near-threshold cash deposits)
+- High-risk jurisdiction transactions
+- Normal customer behaviour
+- Mixed transaction channels and amounts
+
+The dataset contains transaction-level information including transaction identifiers, customer identifiers, timestamps, transaction amounts, channels, and countries.
+
+**Dataset source:** Synthetic dataset generated with AI assistance (OpenAI Codex) for this project.
+
+## AI Assistance Disclosure
+
+The following AI-assisted tools were used during development:
+
+- OpenAI Codex – code generation assistance and synthetic dataset generation
+- Cursor – code editing and development assistance
+- Google Gemini – documentation and brainstorming assistance
+- ChatGPT – architecture discussions, debugging, workflow design, and documentation refinement
+
+All implementation decisions, system integration, testing, validation, and final project submission were completed by the project author.
 
 # Future Enhancements
 

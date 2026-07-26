@@ -457,7 +457,7 @@ streamlit run app.py
 
 # Contributors
 
-**Anjali Jakka**
+**Jakka Anjali**
 
 VIT Vellore
 

@@ -1,110 +1,470 @@
-# finance-analysis-agent
+# FinTrace Copilot – Agentic AML Investigation System
 
-AI-powered suspicious-activity detection agent that dynamically orchestrates EDA, feature engineering, anomaly detection, risk classification, and human-readable explanations for transaction and customer-level AML analysis.
+An intelligent **agentic Anti-Money Laundering (AML)** investigation system that dynamically analyzes financial transactions based on natural-language analyst queries.
 
-## Problem statement
-Al-Powered Suspicious Activity Detection
+Instead of executing a fixed analytics pipeline, the agent first understands the analyst's intent, constructs a query-specific execution plan, invokes **only the required analytical tools**, and produces an explainable investigation report with risk assessment and escalation recommendations.
 
-Financial institutions globally are mandated by regulatory bodies (FinCEN, FATF, local authorities) to implement robust Anti-Money Laundering (AML) compliance programs. However, traditional rute-based systems generate excessive false positives, overwhelming compliance teams and increasing operational costs. Meanwhile, sophisticated money laundering techniques-including structuring. smurfing, and layering evade conventional detection methods.
-The challenge is to build an intelligent, autonomous agent that can learn from transaction patterns, identify suspicious behaviours, and provide explainable risk assessments with actionable escalation recommendations. Such an agent would reduce false positives, improve detection accuracy, and enable compliance teams to focus on genuine threats rather than manual rule tuning.
-The agent must accept a user instruction or query (e.g., "Analyse this dataset for suspicious activity" or "Flag high-risk customers") and autonomously orchestrate calls to internal components/tools to complete the task.
+---
 
-## Summary
-This project demonstrates an agentic system that accepts natural-language queries (e.g., "Find structuring in the last 30 days" or "Is customer 4521 suspicious?"), builds a query-aware execution plan, invokes only the necessary analytic tools, and returns ranked suspicious items with risk levels, explanations, and recommended escalation actions (monitor / review / report).
+# Problem Statement
 
-## Key capabilities:
-- Intent and filter extraction from free-text queries (date ranges, customer IDs, transaction types).
-- Agentic orchestration
-- Dynamic planner that invokes only required tools (no fixed sequential pipeline).
-- On-demand and selective EDA, targeted preprocessing, and AML feature engineering (frequency, rolling sums, velocity).
-- Hybrid anomaly detection (rules + statistical / ML scoring).
-- Risk scoring and classification into low / medium / high and concise human-readable explanations.
-- Explainable AI
-- Escalation recommendations
+Financial institutions are required by regulatory authorities such as **FinCEN**, **FATF**, and national banking regulators to monitor financial transactions for suspicious activities.
 
-## Repo layout
+Traditional AML systems rely heavily on static rule-based pipelines that:
+
+- Generate excessive false positives
+- Execute unnecessary analyses for every investigation
+- Increase compliance costs
+- Provide poor explainability
+- Struggle to adapt to different analyst queries
+
+The objective of this project is to build an **agentic AML investigation system** capable of understanding analyst intent and dynamically orchestrating only the analyses required to answer that specific investigation.
+
+---
+
+# Solution Overview
+
+FinTrace Copilot behaves like an intelligent AML investigation assistant.
+
+Given a natural-language query such as:
+
+> "Find structuring patterns in the last 30 days"
+
+or
+
+> "Is customer CUST_4521 suspicious?"
+
+the system automatically:
+
+1. Understands the analyst's intent
+2. Extracts relevant entities
+3. Builds an execution plan
+4. Invokes only the required AML tools
+5. Skips unnecessary computation
+6. Produces an explainable investigation report
+
+Unlike conventional sequential workflows, the execution path changes dynamically depending on the analyst's request.
+
+---
+
+# Key Features
+
+- Natural-language AML investigation
+- Intent classification using lightweight parsing
+- Automatic entity extraction
+- Dynamic tool orchestration
+- Conditional execution (only required tools run)
+- Rule-based structuring detection
+- Isolation Forest anomaly detection
+- AML feature engineering
+- Customer aggregation analysis
+- Dataset profiling (EDA)
+- Explainable risk scoring
+- Human-readable investigation reports
+- Execution trace showing invoked and skipped tools
+
+---
+
+# Agent Workflow
+
 ```
-app.py                    # Streamlit demo / quick UI
-requirements.txt          # Python dependencies
-data/
-  aml_transactions.csv    # Sample dataset (included)
-prompts/
-  planner_prompt.txt      # Planner/agent prompt templates
-src/
-  main.py                 # CLI / example entrypoint
-  agent/                  # Agent core: parser, planner, orchestrator, executor
-  tools/                  # Modular tools: eda, filter, features, anomaly, risk, explainer
-  utils/                  # Helper utilities
-test_agent.py             # Basic tests / usage examples
+Analyst Query
+        ↓
+Intent Parser
+        ↓
+Entity Extraction
+        ↓
+Execution Plan
+        ↓
+Dynamic Orchestrator
+        ↓
+Conditional Tool Invocation
+        ↓
+Risk Classification
+        ↓
+Explainable Investigation Report
 ```
 
-## Quick start
-1. Clone
+The execution path is **adaptive**, meaning different analyst queries invoke different combinations of tools.
+
+---
+
+# Project Architecture
+
+The project is organized into modular components.
+
+```
+finance-analysis-agent/
+
+│
+├── app.py
+├── requirements.txt
+│
+├── data/
+│   └── aml_transactions.csv
+│
+├── prompts/
+│   └── planner_prompt.txt
+│
+├── src/
+│   │
+│   ├── agent/
+│   │      intent_parser.py
+│   │      orchestrator.py
+│   │      executor.py
+│   │      planner.py
+│   │
+│   ├── tools/
+│   │      filter_tool.py
+│   │      eda_tool.py
+│   │      feature_tool.py
+│   │      aggregation_tool.py
+│   │      anomaly_tool.py
+│   │      risk_tool.py
+│   │      explainer_tool.py
+│   │
+│   └── utils/
+│
+└── test_agent.py
+```
+
+---
+
+# Technology Stack
+
+### Frontend
+
+- Streamlit
+
+### Backend
+
+- Python
+
+### Data Processing
+
+- Pandas
+- NumPy
+
+### Machine Learning
+
+- Scikit-learn
+- Isolation Forest
+
+### Visualization
+
+- Plotly
+- Matplotlib
+
+### Agent Design
+
+- Modular Tool Registry
+- Dynamic Orchestrator
+- Intent Parser
+- Execution Planner
+
+---
+
+# Core Components
+
+## 1. Intent Parser
+
+Responsible for understanding analyst queries.
+
+Functions include:
+
+- Intent classification
+- Entity extraction
+- Customer identification
+- Time-window extraction
+- Amount threshold extraction
+- Country extraction
+- Pattern detection
+
+Produces a structured `ParsedQuery` object containing:
+
+- intent
+- extracted entities
+- tools_to_invoke
+- skipped_tools
+- rationale
+
+---
+
+## 2. Dynamic Orchestrator
+
+Acts as the brain of the agent.
+
+Responsibilities include:
+
+- Reading execution plans
+- Routing execution dynamically
+- Invoking only selected tools
+- Skipping unnecessary analysis
+- Maintaining execution trace
+- Aggregating intermediate outputs
+
+Unlike traditional pipelines, the orchestrator does **not** execute every module.
+
+---
+
+## 3. Tool Registry
+
+Available analytical tools include:
+
+### Filter Tool
+
+Scopes the transaction dataset using:
+
+- customer ID
+- country
+- amount thresholds
+- time window
+
+---
+
+### EDA Tool
+
+Performs exploratory analysis including:
+
+- dataset profiling
+- distributions
+- descriptive statistics
+
+Executed only when requested.
+
+---
+
+### Feature Engineering Tool
+
+Generates AML-specific features including:
+
+- rolling transaction counts
+- near-threshold indicators
+- transaction velocity metrics
+
+---
+
+### Rule-Based Structuring Detection
+
+Detects suspicious structuring behaviour using regulatory-inspired heuristics.
+
+---
+
+### Isolation Forest Anomaly Detection
+
+Uses unsupervised machine learning to identify anomalous transactions.
+
+---
+
+### Aggregation Tool
+
+Produces customer-level summaries including:
+
+- transaction counts
+- aggregated transaction values
+- threshold analysis
+
+---
+
+### Risk Classification Engine
+
+Assigns:
+
+- Risk Score
+- Risk Level
+
+Categories:
+
+- Low
+- Medium
+- High
+
+---
+
+### Explainer Tool
+
+Generates analyst-friendly explanations describing:
+
+- why an entity was flagged
+- suspicious patterns detected
+- supporting evidence
+- recommended escalation
+
+---
+
+# Dynamic Execution
+
+One of the key innovations of this project is **dynamic execution**.
+
+Example:
+
+### Query
+
+```
+Find structuring patterns in the last 30 days
+```
+
+Executed:
+
+- Filter
+- Feature Engineering
+- Structuring Detection
+- Risk Classification
+- Explanation
+
+Skipped:
+
+- Aggregation
+- EDA
+- Isolation Forest
+
+---
+
+### Query
+
+```
+Which customers made more than 10 transactions under $10,000?
+```
+
+Executed:
+
+- Filter
+- Aggregation
+- Risk Classification
+- Explanation
+
+Skipped:
+
+- Feature Engineering
+- Structuring Detection
+- Isolation Forest
+- EDA
+
+---
+
+### Query
+
+```
+Explore this dataset
+```
+
+Executed:
+
+- Filter
+- EDA
+
+Skipped:
+
+- Structuring Detection
+- Aggregation
+- Isolation Forest
+
+---
+
+# Example Output
+
+The generated investigation report includes:
+
+- Execution Summary
+- Execution Trace
+- Tools Invoked
+- Skipped Tools
+- Flagged Customers
+- Flagged Transactions
+- Risk Score
+- Risk Level
+- Explanation
+- Recommended Escalation
+- Supporting Tables
+- EDA Metrics (when applicable)
+
+---
+
+# Dataset
+
+The project uses a sample AML transaction dataset located at:
+
+```
+data/aml_transactions.csv
+```
+
+The dataset contains transaction-level information including:
+
+- Transaction ID
+- Customer ID
+- Timestamp
+- Amount
+- Country
+- Transaction Channel
+
+---
+
+# Installation
+
+Clone the repository
+
 ```bash
 git clone https://github.com/jakka-anjali/finance-analysis-agent.git
 cd finance-analysis-agent
 ```
 
-2. Virtual environment & install
+Create a virtual environment
+
 ```bash
 python -m venv .venv
-source .venv/bin/activate     # Windows: .venv\Scripts\activate
+```
+
+Activate it
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-3. Run demo (Streamlit)
+Run the application
+
 ```bash
 streamlit run app.py
 ```
 
-4. Run example / tests
-```bash
-python src/main.py --help
-pytest -q
-```
+---
 
-Environment variables:
-- If using the LLM-backed explainer, set OPENAI_API_KEY (or other provider key) in your environment.
+# Future Enhancements
 
-## How it works (runtime overview)
-1. User sends a natural-language query to the agent.
-2. Intent parser extracts intent, filters, entities, and pattern types.
-3. Planner creates a minimal execution plan (which tools, order, and data subset).
-4. Orchestrator/Executor runs the selected tools and aggregates outputs.
-5. Risk tool converts scores into categories; explainer produces human-readable reasons.
-6. Results returned: execution summary, flagged items, risk level, explanation, suggested action, and optional supporting charts.
+- Real-time transaction monitoring
+- Graph-based money laundering detection
+- Multi-agent investigation workflows
+- LLM-powered reasoning and explanations
+- Regulatory report generation (SAR/STR)
+- Streaming data support
+- Case management integration
+- Human feedback learning
 
-Example behaviors:
-- "Find structuring patterns in the last 30 days" → apply time filter → run structuring features + detection → skip full EDA.
-- "Which customers made 10+ transactions under $10,000?" → run aggregation/threshold rule only.
-- "Is customer 4521 suspicious?" → perform single-entity feature compute, scoring, and explain.
+---
 
-## Data & privacy
-- This repository currently contains `data/aml_transactions.csv`. The repository is public by default: anyone who can access the repo URL can view and clone all files, including that CSV.
-- To prevent public access, change the repository visibility to private or remove the dataset from the repository and its history. Note: removing a file from the current commit does not erase it from git history — use `git filter-repo` or BFG to purge history if necessary.
+# Contributors
 
-Quick removal (non-history rewriting):
-```bash
-git rm --cached data/aml_transactions.csv
-echo "data/aml_transactions.csv" >> .gitignore
-git commit -m "remove dataset from current branch and ignore it"
-git push
-```
-To permanently remove from history, follow GitHub's documentation or use BFG/git-filter-repo and force-push (coordinate with collaborators).
+**Anjali Jakka**
 
-## Configuration & customization
-- Detection rules, thresholds, and classification logic live in `src/tools/anomaly_tool.py` and `src/tools/risk_tool.py`.
-- Add/replace models by extending `src/tools/` and updating the planner to reference new tools.
-- Prompts for planner/LLM components are in `prompts/`.
+VIT Vellore
 
-## Contributing
-- Open an issue describing the feature/bug before large changes.
-- Add tests for new behaviors and follow the existing module structure.
-- Add a LICENSE file to declare reuse terms.
+B.Tech Computer Science (IoT)
 
-## License
-- No license file included.
+---
 
-## Contact
-- Repo owner: jakka-anjali
+# License
 
+This project was developed for educational and hackathon purposes.

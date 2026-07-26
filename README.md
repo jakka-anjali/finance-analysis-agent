@@ -457,16 +457,29 @@ The dataset contains transaction-level information including transaction identif
 
 **Dataset source:** Synthetic dataset generated with AI assistance (OpenAI Codex) for this project.
 
-## AI Assistance Disclosure
+## AI Assistance & Development Tools
 
-The following AI-assisted tools were used during development:
+This project was developed using a combination of standard software development tools, AI-assisted coding tools, and diagramming tools.
 
-- OpenAI Codex – code generation assistance and synthetic dataset generation
-- Cursor – code editing and development assistance
-- Google Gemini – documentation and brainstorming assistance
-- ChatGPT – architecture discussions, debugging, workflow design, and documentation refinement
+### AI-assisted development
+- ChatGPT (OpenAI) – architecture discussions, agent workflow design, debugging assistance, documentation refinement, and technical explanations.
+- OpenAI Codex – code generation assistance and synthetic AML dataset generation.
+- Cursor – AI-assisted code editing and development.
+- Google Gemini – brainstorming, documentation assistance, and design discussions.
 
-All implementation decisions, system integration, testing, validation, and final project submission were completed by the project author.
+### Development tools
+- Visual Studio Code
+- Git & GitHub
+- Python
+- Streamlit
+
+### Diagramming & Documentation
+- Mermaid – workflow diagram generation.
+- Eraser – system architecture visualization.
+- Napkin AI – workflow diagram refinement.
+- Canva – presentation slides and project report.
+
+All final implementation decisions, code integration, testing, validation, and project submission were completed by the project author.
 
 # Future Enhancements
 
